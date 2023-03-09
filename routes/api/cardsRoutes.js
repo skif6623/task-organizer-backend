@@ -13,6 +13,6 @@ router.get("/:cardId", isValidId, ctrl.getById);
 router.post("/", validateBody(schemas.addSchema), ctrl.Add);
 router.delete("/:cardId", isValidId, ctrl.removeById);
 router.put("/:cardId", isValidId, validateBody(schemas.addSchema), ctrl.updateById);
-// router.patch("/:cardId", isValidId, validateBody(schemas.updateFavoriteSchema), ctrl.updateFavorite);
+router.patch("/:cardId/items", isValidId, validateBody(schemas.updateItemsSchema), ctrl.updateFavorite);
 
 module.exports = router;

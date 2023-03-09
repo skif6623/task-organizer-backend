@@ -23,8 +23,13 @@ const addSchema = Joi.object({
 	items: Joi.array().required(),
 });
 
+const updateItemsSchema = Joi.object({
+	items: Joi.array().required(),
+});
+
 const schemas = {
 	addSchema,
+	updateItemsSchema,
 };
 
 const Card = model("card", cardsSchema);

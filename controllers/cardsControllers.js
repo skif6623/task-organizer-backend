@@ -40,15 +40,15 @@ const updateById = async (req, res) => {
 	res.json(result);
 };
 
-// const updateFavorite = async (req, res) => {
-// 	const {cardId} = req.params;
+const updateItems = async (req, res) => {
+	const {cardId} = req.params;
 
-// 	const result = await Card.findByIdAndUpdate(cardId, req.body, {new: true});
-// 	if (!result) {
-// 		throw HttpError(404, "Not found");
-// 	}
-// 	res.json(result);
-// };
+	const result = await Card.findByIdAndUpdate(cardId, req.body, {new: true});
+	if (!result) {
+		throw HttpError(404, "Not found");
+	}
+	res.json(result);
+};
 
 module.exports = {
 	getAll: ctrlWrapper(getAll),
@@ -56,5 +56,5 @@ module.exports = {
 	Add: ctrlWrapper(Add),
 	removeById: ctrlWrapper(removeById),
 	updateById: ctrlWrapper(updateById),
-	// updateFavorite: ctrlWrapper(updateFavorite),
+	updateFavorite: ctrlWrapper(updateItems),
 };
