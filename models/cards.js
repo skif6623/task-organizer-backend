@@ -31,7 +31,6 @@ const addSchema = Joi.object({
 });
 
 const itemSchema = Joi.object({
-	id: Joi.string().required(),
 	text: Joi.string().required(),
 });
 
