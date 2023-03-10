@@ -23,8 +23,13 @@ const addSchema = Joi.object({
 	items: Joi.array().required(),
 });
 
+const itemSchema = Joi.object({
+	id: Joi.string().required(),
+	text: Joi.string().required(),
+});
+
 const updateItemsSchema = Joi.object({
-	items: Joi.array().required(),
+	items: Joi.array().items(itemSchema).required(),
 });
 
 const schemas = {
