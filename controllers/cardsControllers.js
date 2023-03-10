@@ -20,6 +20,11 @@ const Add = async (req, res) => {
 	res.status(201).json(result);
 };
 
+const AddTask = async (req, res) => {
+	const result = await Card.create(req.body);
+	res.status(201).json(result);
+};
+
 const removeById = async (req, res) => {
 	const {cardId} = req.params;
 	const result = await Card.findByIdAndDelete(cardId);
@@ -54,6 +59,7 @@ module.exports = {
 	getAll: ctrlWrapper(getAll),
 	getById: ctrlWrapper(getById),
 	Add: ctrlWrapper(Add),
+	AddTask: ctrlWrapper(AddTask),
 	removeById: ctrlWrapper(removeById),
 	updateById: ctrlWrapper(updateById),
 	updateFavorite: ctrlWrapper(updateItems),
