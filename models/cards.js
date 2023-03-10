@@ -3,10 +3,6 @@ const {handleMongooseError} = require("../helpers");
 const Joi = require("joi");
 
 const itemsSchema = new Schema({
-	id: {
-		type: String,
-		required: true,
-	},
 	text: {
 		type: String,
 		required: true,
