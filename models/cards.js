@@ -30,12 +30,8 @@ const addSchema = Joi.object({
 	items: Joi.array().required(),
 });
 
-const itemSchema = Joi.object({
-	text: Joi.string().required(),
-});
-
 const updateItemsSchema = Joi.object({
-	items: Joi.array().items(itemSchema).required(),
+	items: Joi.array().required(),
 });
 
 const schemas = {
