@@ -2,6 +2,16 @@ const {Schema, model} = require("mongoose");
 const {handleMongooseError} = require("../helpers");
 const Joi = require("joi");
 
+const itemsSchema = new Schema(
+	{
+		text: {
+			type: String,
+			required: true,
+		},
+	},
+	{timestamps: true},
+);
+
 const cardsSchema = new Schema(
 	{
 		title: {
@@ -9,7 +19,7 @@ const cardsSchema = new Schema(
 			required: true,
 		},
 		items: {
-			type: Array,
+			type: [itemsSchema],
 			required: true,
 		},
 	},
