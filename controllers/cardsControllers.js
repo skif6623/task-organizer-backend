@@ -6,15 +6,6 @@ const getAll = async (req, res) => {
 	res.json(result);
 };
 
-// const getById = async (req, res) => {
-// 	const {cardId} = req.params;
-// 	const result = await Card.findById(cardId);
-// 	if (!result) {
-// 		throw HttpError(404, "Not Found");
-// 	}
-// 	res.json(result);
-// };
-
 const addCard = async (req, res) => {
 	const result = await Card.create(req.body);
 	res.status(201).json(result);
@@ -29,16 +20,6 @@ const removeById = async (req, res) => {
 	}
 	res.status(200).json(result);
 };
-
-// const updateById = async (req, res) => {
-// 	const {cardId} = req.params;
-
-// 	const result = await Card.findByIdAndUpdate(cardId, req.body, {new: true});
-// 	if (!result) {
-// 		throw HttpError(404, "Not found");
-// 	}
-// 	res.json(result);
-// };
 
 const addItemById = async (req, res) => {
 	const {cardId} = req.params;
@@ -62,23 +43,42 @@ const deleteItemById = async (req, res) => {
 	res.json(updatedCard);
 };
 
-// const updateItems = async (req, res) => {
-// 	const {cardId} = req.params;
+const updateItems = async (req, res) => {
+	const {cardId} = req.params;
 
-// 	const result = await Card.findByIdAndUpdate(cardId, req.body, {new: true});
-// 	if (!result) {
-// 		throw HttpError(404, "Not found");
-// 	}
-// 	res.json(result);
-// };
+	const result = await Card.findByIdAndUpdate({_id: cardId}, req.body, {new: true});
+	if (!result) {
+		throw HttpError(404, "Not found");
+	}
+	res.json(result);
+};
+
+const updateManyItems = async (req, res) => {
+	const {cardStartId, cardEndId} = req.params;
+
+	const {taskStart, taskEnd} = req.body;
+
+	const updatedTasksStart = Card.findByIdAndUpdate({_id: cardStartId}, {$set: {items: taskStart}});
+
+	const updatedTasksEnd = Card.findByIdAndUpdate({_id: cardEndId}, {$set: {items: taskEnd}});
+
+	const results = await Promise.all([updatedTasksStart, updatedTasksEnd]);
+
+	if (!results.every(result => result)) {
+		throw HttpError(404, "Not found");
+	}
+
+	const updatedCards = await Card.find({_id: {$in: [cardStartId, cardEndId]}});
+
+	res.json(updatedCards);
+};
 
 module.exports = {
 	getAll: ctrlWrapper(getAll),
-	// getById: ctrlWrapper(getById),
 	addCard: ctrlWrapper(addCard),
 	removeById: ctrlWrapper(removeById),
-	// updateById: ctrlWrapper(updateById),
-	// updateFavorite: ctrlWrapper(updateItems),
+	updateItems: ctrlWrapper(updateItems),
+	updateManyItems: ctrlWrapper(updateManyItems),
 	addItemById: ctrlWrapper(addItemById),
 	deleteItemById: ctrlWrapper(deleteItemById),
 };
